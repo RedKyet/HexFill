@@ -90,6 +90,7 @@ px_line6 = list(pixelMatrix[11])
 print(px_line6)
         
 positions_X = []
+positions_Y = []
 
 for i in range(0,13):
     if i%2==0:
@@ -98,6 +99,16 @@ for i in range(0,13):
     else:
         positions_X.append(px_line6[0][0])
         list.pop(px_line6,0)
+
+for i in range(0,12):
+    positions_Y.append(pixelMatrix[i][0][1])
+#increase rez for y postions
+for i in range(len(positions_Y)):
+    positions_Y.insert(i+1,(positions_Y[i]+positions_Y[i+1])/2)
+    i+=1
+
+print("YGREC")
+print(positions_Y)
 
 print(positions_X)
 #pixelRect.center = (pixelMatrix[9][1][0],pixelMatrix[9][1][1])
