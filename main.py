@@ -3,7 +3,7 @@ from pygame.locals import RESIZABLE
 
 # window setup
 
-WINDOW_H_base = 540
+WINDOW_H_base = 637
 WINDOW_W_base = 360
 displayMultiplier = 1
 pixelMultiplier = 0.54
@@ -60,27 +60,22 @@ pixelMatrix = [
                [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
                [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
                [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
-               [[pixel1posX-pixelW//2-1.8,pixel1posY-pixelH,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+               [[pixel1posX-pixelW//2-1.8,pixel1posY-pixelH+realWindowH//36,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
                [[pixel1posX,pixel1posY,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]]
 
 for j in range(11,0,-2):
     for i in range(0,6):
         pixelMatrix[j][i][0]=pixelMatrix[11][0][0]+(pixelW+1.1)*i
-        pixelMatrix[j][i][1]=pixelMatrix[11][0][1]-pixelH*(11-j)
-        
-        print(pixelMatrix[j][i][0],pixelMatrix[j][i][1])
-
-print('dffdf')
+        pixelMatrix[j][i][1]=pixelMatrix[11][0][1]-pixelH*0.72*(11-j)
 
 for j in range(10,-1,-2):
     for i in range(0,7):
         pixelMatrix[j][i][0]=pixelMatrix[10][0][0]+(pixelW+1.1)*i
-        pixelMatrix[j][i][1]=pixelMatrix[10][0][1]-pixelH*(11-j)
+        pixelMatrix[j][i][1]=pixelMatrix[10][0][1]-(10-j)*pixelH*0.72
         
-        print(pixelMatrix[j][i][0],pixelMatrix[j][i][1])
 
 
-pixelRect.center = (pixelMatrix[9][1][0],pixelMatrix[9][1][1])
+#pixelRect.center = (pixelMatrix[9][1][0],pixelMatrix[9][1][1])
 #pixelRect.center = (pixelMatrix[10][0][0],pixelMatrix[10][0][1])
 
 while running:
@@ -100,7 +95,10 @@ while running:
     #position ui
     #screen.blit(minusButton, minusRect)
     #screen.blit(plusButton, plusRect)
-    screen.blit(pixel,pixelRect)
+    for row in pixelMatrix:
+        for pixelProp in row:
+            pixelRect.center = (pixelProp[0], pixelProp[1])
+            screen.blit(pixel, pixelRect)
 
 
     """pygame.draw.circle(screen, "black", player_pos, 40)
