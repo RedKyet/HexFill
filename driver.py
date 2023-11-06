@@ -28,7 +28,8 @@ def lee_fill(mat, cols, source):
     def findNeighbors(mat, current):
         x = current[0]
         y = current[1]
-        if mat[x][y + 1] == 
+        color = current[2]
+        if mat[x][y + 1][2] == 
     q = deque()
     q.append(source)
     while q:
