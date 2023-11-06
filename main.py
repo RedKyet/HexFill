@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import RESIZABLE
-#from driver import master
+from driver import master
 
 # window setup
 
@@ -186,14 +186,14 @@ while running:
 
     #text
     
-    """text = master(pixelMatrix, 0)
-    font = pygame.font.Font("Arial", 36)
+    text = master(pixelMatrix, 0)
+    font = pygame.font.Font(None, 36)
     img1 = font.render(text[0], True, (255, 255, 255))
     img2 = font.render(text[1], True, (255, 255, 255))
     img3 = font.render(text[2], True, (255, 255, 255))
-    screen.blit(img1, (30, 290))
-    screen.blit(img2, (30, 310))
-    screen.blit(img3, (30, 330))"""
+    screen.blit(img1, (130, 600))
+    screen.blit(img2, (130, 610))
+    screen.blit(img3, (130, 620))
     
     dt = clock.tick(60) / 1000
 

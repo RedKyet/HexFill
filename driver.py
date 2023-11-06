@@ -1,18 +1,3 @@
-# test_mat = [
-# [[], [], [], [], [], []],       # 0
-# [[], [], [], [], [], [], []],   # 1
-# [[], [], [], [], [], []],       # 2
-# [[], [], [], [], [], [], []],   # 3
-# [[], [], [], [], [], []],       # 4
-# [[], [], [], [], [], [], []],   # 5
-# [[], [], [], [], [], []]        # 6
-# [[], [], [], [], [], [], []],   # 7
-# [[], [], [], [], [], []]        # 8
-# [[], [], [], [], [], [], []],   # 9
-# [[], [], [], [], [], []]        # 10
-# [[], [], [], [], [], [], []],   # 11
-# ]
-
 # even rows --> 0 - 5 (6)
 # odd rows --> 0 - 6 (7) 
 source = [0, 0]
@@ -107,17 +92,17 @@ def master(mat, prev_score):
     
     return [score_TEXT, score_diff_TEXT, highest_TEXT, highest_color]
 
-def bomb(mat, source):
-    mat = fill(mat, source, 0)[1]
-    return mat
+# def bomb(mat, source):
+#     mat = fill(mat, source, 0)[1]
+#     return mat
     
-def bleach(mat, source):
-    mat = fill(mat, source, 1)[1]
-    return mat
+# def bleach(mat, source):
+#     mat = fill(mat, source, 1)[1]
+#     return mat
 
-def color(mat, source, mode):
-    mat = fill(mat, source, mode)[1]
-    return mat
+# def color(mat, source, mode):
+#     mat = fill(mat, source, mode)[1]
+#     return mat
 
 test_mat = [
 [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 0 (TOP)
