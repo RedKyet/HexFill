@@ -98,7 +98,6 @@ for i in range(0,13):
         list.pop(px_line6,0)
 
 print(positions_X)
-player_pos = pygame.Vector2(positions_X[lastpos], screen.get_height() / 2)
 #pixelRect.center = (pixelMatrix[9][1][0],pixelMatrix[9][1][1])
 #pixelRect.center = (pixelMatrix[10][0][0],pixelMatrix[10][0][1])
 
@@ -136,21 +135,23 @@ while running:
     
 
     keys = pygame.key.get_pressed()
-    if keys!=prev_key:
+    if keys!=prev_key or timer<=0:
         if keys[pygame.K_a]:
-            lastpos-=1
-            player_pos.x = positions_X[lastpos]
+            if lastpos!=0: lastpos-=1
         if keys[pygame.K_d]:
-            lastpos+=1
-            player_pos.x = positions_X[lastpos]
+            if lastpos!=12: lastpos+=1
+        timer=10
     prev_key=keys
+    
     player_rect = pixel_green.get_rect()
     player_rect.centerx=positions_X[lastpos]
+    player_rect.centery=screen.get_height() / 2
     screen.blit(pixel_green, player_rect)
     
     pygame.draw.rect(screen, "black", pygame.Rect(0, 0, realWindowW, realWindowH/20))
 
     pygame.display.flip()
+    timer-=1
     dt = clock.tick(60) / 1000
 
 pygame.quit()
