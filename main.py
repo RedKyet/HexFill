@@ -11,7 +11,6 @@ pixelMultiplier = 0.54
 
 pixelW=83.1*pixelMultiplier*displayMultiplier
 pixelH=96.0*pixelMultiplier*displayMultiplier
-
 realWindowH = WINDOW_H_base * displayMultiplier
 realWindowW = WINDOW_W_base * displayMultiplier
 
@@ -25,7 +24,7 @@ prev_key=pygame.K_ESCAPE
 lastpos =0
 gravity_step = pixelH*0.72*0.5
 gravity_timer = 0
-velocity = 15
+velocity = 60
 
 #set sprites
 bg = pygame.image.load("Assets/board.png")
@@ -139,6 +138,8 @@ while running:
     #screen.blit(minusButton, minusRect)
     #screen.blit(plusButton, plusRect)
 
+
+    #check if pixel can be placed
     if(y_pos==len(positions_Y)-1-2*4):
         if lastpos%2==1:
             pixelMatrix[9][lastpos//2][2] = 2
@@ -168,6 +169,7 @@ while running:
     player_rect = pixel_green.get_rect()
     player_rect.centerx=positions_X[lastpos]
     player_rect.centery=positions_Y[y_pos]
+    print(y_pos)
     screen.blit(pixel_green, player_rect)
     
     pygame.draw.rect(screen, "black", pygame.Rect(0, 0, realWindowW, realWindowH/20))
