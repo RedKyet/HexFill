@@ -41,13 +41,41 @@ pixelRect = pixel.get_rect()
 
 minusRect.center = (100,100)
 plusRect.center = (200, 100)
-pixelRect.center = (realWindowW//2-pixelW//2,realWindowH-realWindowH//4.65)
 
-
+pixel1posX = realWindowW//2-pixelW//2 - 2*(pixelW+1.8)
+pixel1posY = realWindowH-realWindowH//4.65
 
 
 
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+
+pixelMatrix = [
+               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+               [[pixel1posX-pixelW//2-1.8,pixel1posY-pixelH,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+               [[pixel1posX,pixel1posY,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]]
+
+for j in range(11,0,-2):
+    for i in range(0,6):
+        pixelMatrix[j][i][0]=pixelMatrix[11][0][0]+(pixelW+1.1)*i
+        pixelMatrix[j][i][1]=pixelMatrix[11][0][1]
+
+for j in range(10,-1,-2):
+    for i in range(0,7):
+        pixelMatrix[j][i][0]=pixelMatrix[10][0][0]+(pixelW+1.1)*i
+        pixelMatrix[j][i][1]=pixelMatrix[10][0][1]
+
+
+pixelRect.center = (pixelMatrix[11][1][0],pixelMatrix[11][1][1])
+#pixelRect.center = (pixelMatrix[10][0][0],pixelMatrix[10][0][1])
 
 while running:
 
