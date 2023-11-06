@@ -23,37 +23,45 @@ source = [0, 0]
 # color = 3 --> green
 
 # mat = pixel matrix
-# N = size of matrix
-def lee(mat, source, action):
+def fill(mat, source):
     q = deque()
-    def propagate(mat, current):
+    sum = 0
+    def recursion(current):
         x = current[0]
         y = current[1]
         color = current[2]
         
         if mat[x][y + 1][2] == color:
             mat[x][y + 1][2] = 4
-            q.append([x, y + 1])
+            sum += 1
+            recursion([x, y + 1, color])
+            
         if mat[x][y - 1][2] == color:
             mat[x][y - 1][2] = 4
-            q.append([x, y - 1])
+            sum += 1
+            recursion([x, y - 1, color])
+            
         if mat[x + 1][y][2] == color:
             mat[x + 1][y][2] = 4
-            q.append([x + 1, y])
+            sum += 1
+            recursion([x + 1, y, color])
+            
         if mat[x - 1][y][2] == color:
             mat[x - 1][y][2] = 4
-            q.append([x - 1, y])
+            sum += 1
+            recursion([x - 1, y, color])
+            
         if mat[x + 1][y + 1][2] == color:
             mat[x + 1][y + 1][2] = 4
-            q.append([x + 1, y + 1])
+            sum += 1
+            recursion([x + 1, y + 1, color])
+            
         if mat[x + 1][y - 1][2] == color:
             mat[x + 1][y - 1][2] = 4
-            q.append([x + 1, y - 1])
+            sum += 1
+            recursion([x + 1, y - 1, color])
             
-    q.append(source)
-    while q:
-        current = q.popleft()
-        propagate(mat, current)
+    recursion(source)
         
 def calculate_score():
     
