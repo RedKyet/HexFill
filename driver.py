@@ -31,48 +31,34 @@ def fill(mat, source, mode):
     # mode = 2, 3 or 4 --> superfill (color bombs)
     
     sum = 0
+    mat[source[0]][source[1]][2] = mode
+    sum += 1
     def recursion(current):
         nonlocal sum
-        nonlocal mat
         x = current[0]
         y = current[1]
         color = current[2]
         
-        if(y + 1 < len(mat[x])): 
-            if mat[x][y + 1][2] == color:
-                mat[x][y + 1][2] = mode
-                sum += 1
-                recursion([x, y + 1, color])
-            
-        if(y - 1 >= 0):    
-            if mat[x][y - 1][2] == color:
-                mat[x][y - 1][2] = mode
-                sum += 1
-                recursion([x, y - 1, color])
-           
-        if(x + 1 < len(mat)):    
-            if mat[x + 1][y][2] == color:
-                mat[x + 1][y][2] = mode
-                sum += 1
-                recursion([x + 1, y, color])
+        dist6x = [-1,  1,  0,  0, -1,  1]
+        dist6y = [ 0,  0, -1,  1,  1,  1]
         
-        if(x - 1 >= 0):   
-            if mat[x - 1][y][2] == color:
-                mat[x - 1][y][2] = mode
-                sum += 1
-                recursion([x - 1, y, color])
+        dist7x = [-1,  1,  0,  0, -1,  1]
+        dist7y = [ 0,  0, -1,  1, -1, -1]
         
-        if(x + 1 < len(mat) and y + 1 < len(mat[x])):    
-            if mat[x + 1][y + 1][2] == color:
-                mat[x + 1][y + 1][2] = mode
-                sum += 1
-                recursion([x + 1, y + 1, color])
-            
-        if(x + 1 < len(mat) and y - 1 >= 0):
-            if mat[x + 1][y - 1][2] == color:
-                mat[x + 1][y - 1][2] = mode
-                sum += 1
-                recursion([x + 1, y - 1, color])
+        if(x % 2 == 1):
+            for i in range(6):
+                if(x + dist6x[i] >= 0 and x + dist6x[i] < len(mat) and y + dist6y[i] >= 0 and y + dist6y[i] < len(mat[x + dist6x[i]])):
+                    if mat[x + dist6x[i]][y + dist6y[i]][2] == color:
+                        mat[x + dist6x[i]][y + dist6y[i]][2] = mode
+                        sum += 1
+                        recursion([x + dist6x[i], y + dist6y[i], color])
+        else:
+            for i in range(6):
+                if(x + dist7x[i] >= 0 and x + dist7x[i] < len(mat) and y + dist7y[i] >= 0 and y + dist7y[i] < len(mat[x + dist7x[i]])):
+                    if mat[x + dist7x[i]][y + dist7y[i]][2] == color:
+                        mat[x + dist7x[i]][y + dist7y[i]][2] = mode
+                        sum += 1
+                        recursion([x + dist7x[i], y + dist7y[i], color])
             
     recursion(source)
     return [sum, mat]
@@ -86,10 +72,11 @@ def master(mat, prev_score):
         for i in range(len(mat)):
             for j in range(len(mat[i])):
                 if mat[i][j][2] != 0 and mat[i][j][2] != 1:
+                    
                     color = mat[i][j][2]
                     add = fill(mat, [i, j, mat[i][j][2]], 0)[0]
                     
-                    if add >= highest_area:
+                    if add > highest_area:
                         highest_area = add
                         highest_color = color
                         
@@ -118,7 +105,7 @@ def master(mat, prev_score):
     # elif highest_color == 5:
     #     highest_TEXT = '-1'
     
-    return [score_TEXT, score_diff_TEXT, highest_TEXT]
+    return [score_TEXT, score_diff_TEXT, highest_TEXT, highest_color]
 
 def bomb(mat, source):
     mat = fill(mat, source, 0)[1]
@@ -146,6 +133,21 @@ test_mat = [
 [[0, 0, 1], [0, 0, 3], [0, 0, 3], [0, 0, 3], [0, 0, 2], [0, 0, 3], [0, 0, 3]],  # 10
 [[0, 0, 1], [0, 0, 1], [0, 0, 3], [0, 0, 3], [0, 0, 3], [0, 0, 3]],             # 11 (BOTTOM)
 ]
+
+# test_mat = [
+# [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 0 (TOP)
+# [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 1
+# [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 2
+# [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 3
+# [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 4
+# [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 5
+# [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 6
+# [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 7
+# [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 8
+# [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 9
+# [[0, 0, 2], [0, 0, 0], [0, 0, 2], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 10
+# [[0, 0, 2], [0, 0, 2], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 11 (BOTTOM)
+# ]
 text = master(test_mat, 0)
 print(text[0])
 print(text[1])
