@@ -102,6 +102,8 @@ while running:
     #position ui
     #screen.blit(minusButton, minusRect)
     #screen.blit(plusButton, plusRect)
+
+    #draw board
     for row in pixelMatrix:
         for pixelProp in row:
             pixelRect.center = (pixelProp[0], pixelProp[1])
