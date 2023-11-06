@@ -5,7 +5,7 @@ from pygame.locals import RESIZABLE
 
 WINDOW_H_base = 540
 WINDOW_W_base = 360
-displayMultiplier = 1.5
+displayMultiplier = 1
 pixelMultiplier = 0.54
 
 pixelW=83.1*pixelMultiplier*displayMultiplier
@@ -66,15 +66,21 @@ pixelMatrix = [
 for j in range(11,0,-2):
     for i in range(0,6):
         pixelMatrix[j][i][0]=pixelMatrix[11][0][0]+(pixelW+1.1)*i
-        pixelMatrix[j][i][1]=pixelMatrix[11][0][1]
+        pixelMatrix[j][i][1]=pixelMatrix[11][0][1]-pixelH*(11-j)
+        
+        print(pixelMatrix[j][i][0],pixelMatrix[j][i][1])
+
+print('dffdf')
 
 for j in range(10,-1,-2):
     for i in range(0,7):
         pixelMatrix[j][i][0]=pixelMatrix[10][0][0]+(pixelW+1.1)*i
-        pixelMatrix[j][i][1]=pixelMatrix[10][0][1]
+        pixelMatrix[j][i][1]=pixelMatrix[10][0][1]-pixelH*(11-j)
+        
+        print(pixelMatrix[j][i][0],pixelMatrix[j][i][1])
 
 
-pixelRect.center = (pixelMatrix[11][1][0],pixelMatrix[11][1][1])
+pixelRect.center = (pixelMatrix[9][1][0],pixelMatrix[9][1][1])
 #pixelRect.center = (pixelMatrix[10][0][0],pixelMatrix[10][0][1])
 
 while running:
