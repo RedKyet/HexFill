@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import RESIZABLE
-from driver import master
+#from driver import master
 
 # window setup
 
@@ -23,9 +23,9 @@ running = True
 dt = 0
 prev_key=pygame.K_ESCAPE
 lastpos =0
-y_pos = 0
 gravity_step = pixelH*0.72*0.5
 gravity_timer = 0
+velocity = 15
 
 #set sprites
 bg = pygame.image.load("Assets/board.png")
@@ -91,6 +91,7 @@ px_line6 = list(pixelMatrix[11])
 print(px_line6)
         
 positions_X = []
+positions_Y = []
 
 for i in range(0,13):
     if i%2==0:
@@ -99,6 +100,22 @@ for i in range(0,13):
     else:
         positions_X.append(px_line6[0][0])
         list.pop(px_line6,0)
+
+for i in range(0,12):
+    positions_Y.append(pixelMatrix[i][0][1])
+#increase rez for y postions
+for j in range(2):
+    i=0
+    while(i<len(positions_Y)-1):
+        positions_Y.insert(i+1,(positions_Y[i]+positions_Y[i+1])/2)
+        i+=2
+
+for i in range(10):
+    positions_Y.insert(0,positions_Y[0]-(positions_Y[1]-positions_Y[0]))
+
+y_pos = 0
+print("YGREC")
+print(positions_Y)
 
 print(positions_X)
 #pixelRect.center = (pixelMatrix[9][1][0],pixelMatrix[9][1][1])
@@ -122,20 +139,8 @@ while running:
     #screen.blit(minusButton, minusRect)
     #screen.blit(plusButton, plusRect)
 
-    #draw board
-    for row in pixelMatrix:
-        for pixelProp in row:
-            pixelRect.center = (pixelProp[0], pixelProp[1])
-            if pixelProp[2]==1:
-                screen.blit(pixel, pixelRect)
-            elif pixelProp[2]==2:
-                screen.blit(pixel_purple, pixelRect)
-            elif pixelProp[2]==3:
-                screen.blit(pixel_yellow, pixelRect)
-            elif pixelProp[2]==4:
-                screen.blit(pixel_green, pixelRect)
-
     
+        
 
     keys = pygame.key.get_pressed()
     if keys!=prev_key or timer<=0:
@@ -148,32 +153,49 @@ while running:
     
     player_rect = pixel_green.get_rect()
     player_rect.centerx=positions_X[lastpos]
-    player_rect.centery=0+y_pos
+    player_rect.centery=positions_Y[y_pos]
     screen.blit(pixel_green, player_rect)
     
     pygame.draw.rect(screen, "black", pygame.Rect(0, 0, realWindowW, realWindowH/20))
+
+
+    if(y_pos==len(positions_Y)-2):
+        if lastpos%2==0:
+            pixelMatrix[9][lastpos//2][2] = 2
+
+    for row in pixelMatrix:
+        for pixelProp in row:
+            pixelRect.center = (pixelProp[0], pixelProp[1])
+            if pixelProp[2]==1:
+                screen.blit(pixel, pixelRect)
+            elif pixelProp[2]==3:
+                screen.blit(pixel_purple, pixelRect)
+            elif pixelProp[2]==2:
+                screen.blit(pixel_yellow, pixelRect)
+            elif pixelProp[2]==4:
+                screen.blit(pixel_green, pixelRect)
 
     pygame.display.flip()
     timer-=1
 
     #fall
     
-    if gravity_timer>=30:
-        y_pos+=gravity_step
+    if gravity_timer>=velocity:
+        y_pos+=1
         gravity_timer=0
     gravity_timer+=1
 
     #text
     
-    text = master(pixelMatrix, 0)
+    """text = master(pixelMatrix, 0)
     font = pygame.font.Font("Arial", 36)
     img1 = font.render(text[0], True, (255, 255, 255))
     img2 = font.render(text[1], True, (255, 255, 255))
     img3 = font.render(text[2], True, (255, 255, 255))
     screen.blit(img1, (30, 290))
     screen.blit(img2, (30, 310))
-    screen.blit(img3, (30, 330))
-
+    screen.blit(img3, (30, 330))"""
+    
     dt = clock.tick(60) / 1000
 
 pygame.quit()
