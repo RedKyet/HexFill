@@ -20,6 +20,8 @@ screen = pygame.display.set_mode((realWindowW,realWindowH))
 clock = pygame.time.Clock()
 running = True
 dt = 0
+prev_key=pygame.K_ESCAPE
+lastpos =0
 
 
 #set sprites
@@ -54,21 +56,21 @@ pixel1posY = realWindowH-realWindowH//4.75
 
 
 
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
-
 pixelMatrix = [
-               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
-               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
-               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
-               [[0,0,1],[0,0,0],[0,0,0],[0,0,1],[0,0,0],[0,0,0]],
-               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
-               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
-               [[0,0,0],[0,0,1],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
-               [[0,0,0],[0,0,0],[0,0,0],[0,0,2],[0,0,0],[0,0,0]],
-               [[0,0,0],[0,0,0],[0,0,0],[0,0,2],[0,0,2],[0,0,1],[0,0,1]],
-               [[0,0,3],[0,0,4],[0,0,1],[0,0,1],[0,0,1],[0,0,1]],
-               [[pixel1posX-pixelW//2-1.8,pixel1posY-pixelH+realWindowH//44,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
-               [[pixel1posX,pixel1posY,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]]
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 0 (TOP)
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 1
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 2
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 3
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 4
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 4], [0, 0, 4], [0, 0, 4]],             # 5
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 4], [0, 0, 4], [0, 0, 4], [0, 0, 1]],  # 6
+[[0, 0, 0], [0, 0, 0], [0, 0, 4], [0, 0, 4], [0, 0, 1], [0, 0, 1]],             # 7
+[[0, 0, 0], [0, 0, 4], [0, 0, 3], [0, 0, 1], [0, 0, 1], [0, 0, 3], [0, 0, 2]],  # 8
+[[0, 0, 4], [0, 0, 4], [0, 0, 3], [0, 0, 1], [0, 0, 3], [0, 0, 2]],             # 9
+[[pixel1posX-pixelW//2-1.8,pixel1posY-pixelH+realWindowH//44, 1], [0, 0, 3], [0, 0, 3], [0, 0, 3], [0, 0, 2], [0, 0, 3], [0, 0, 3]],  # 10
+[[pixel1posX,pixel1posY, 1], [0, 0, 1], [0, 0, 3], [0, 0, 3], [0, 0, 3], [0, 0, 3]],             # 11 (BOTTOM)
+]
+
 
 for j in range(11,0,-2):
     for i in range(0,6):
@@ -79,9 +81,24 @@ for j in range(10,-1,-2):
     for i in range(0,7):
         pixelMatrix[j][i][0]=pixelMatrix[10][0][0]+(pixelW+1.1)*i
         pixelMatrix[j][i][1]=pixelMatrix[10][0][1]-(10-j)*pixelH*0.72
+
+px_line7 = list(pixelMatrix[10])
+print(px_line7)
+px_line6 = list(pixelMatrix[11])
+print(px_line6)
         
+positions_X = []
 
+for i in range(0,13):
+    if i%2==0:
+        positions_X.append(px_line7[0][0])
+        list.pop(px_line7,0)
+    else:
+        positions_X.append(px_line6[0][0])
+        list.pop(px_line6,0)
 
+print(positions_X)
+player_pos = pygame.Vector2(positions_X[lastpos], screen.get_height() / 2)
 #pixelRect.center = (pixelMatrix[9][1][0],pixelMatrix[9][1][1])
 #pixelRect.center = (pixelMatrix[10][0][0],pixelMatrix[10][0][1])
 
@@ -116,18 +133,22 @@ while running:
             elif pixelProp[2]==4:
                 screen.blit(pixel_green, pixelRect)
 
-
-    """pygame.draw.circle(screen, "black", player_pos, 40)
+    
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
-        player_pos.y -= 300 * dt
-    if keys[pygame.K_s]:
-        player_pos.y += 300 * dt
-    if keys[pygame.K_a]:
-        player_pos.x -= 300 * dt
-    if keys[pygame.K_d]:
-        player_pos.x += 300 * dt"""
+    if keys!=prev_key:
+        if keys[pygame.K_a]:
+            lastpos-=1
+            player_pos.x = positions_X[lastpos]
+        if keys[pygame.K_d]:
+            lastpos+=1
+            player_pos.x = positions_X[lastpos]
+    prev_key=keys
+    player_rect = pixel_green.get_rect()
+    player_rect.centerx=positions_X[lastpos]
+    screen.blit(pixel_green, player_rect)
+    
+    pygame.draw.rect(screen, "black", pygame.Rect(0, 0, realWindowW, realWindowH/20))
 
     pygame.display.flip()
     dt = clock.tick(60) / 1000
