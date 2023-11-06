@@ -26,6 +26,9 @@ dt = 0
 bg = pygame.image.load("Assets/board.png")
 #shooter = pygame.image.load("Assets/board.png")
 pixel = pygame.image.load("Assets/pixel.png")
+pixel_purple = pygame.image.load("Assets/pixel_purple.png")
+pixel_green = pygame.image.load("Assets/pixel_green.png")
+pixel_yellow = pygame.image.load("Assets/pixel_yellow.png")
 plusButton = pygame.image.load("Assets/plus.png")
 minusButton = pygame.image.load("Assets/minus.png")
 
@@ -34,6 +37,10 @@ bg = pygame.transform.scale(bg, (realWindowW,realWindowH))
 minusButton = pygame.transform.smoothscale(minusButton.convert_alpha(), (30*displayMultiplier,30*displayMultiplier))
 plusButton = pygame.transform.smoothscale(plusButton.convert_alpha(), (30*displayMultiplier,30*displayMultiplier))
 pixel = pygame.transform.smoothscale(pixel.convert_alpha(), (pixelW,pixelH))
+pixel_purple = pygame.transform.smoothscale(pixel_purple.convert_alpha(), (pixelW,pixelH))
+pixel_green = pygame.transform.smoothscale(pixel_green.convert_alpha(), (pixelW,pixelH))
+pixel_yellow = pygame.transform.smoothscale(pixel_yellow.convert_alpha(), (pixelW,pixelH))
+
 
 minusRect = minusButton.get_rect()
 plusRect = plusButton.get_rect()
@@ -42,8 +49,8 @@ pixelRect = pixel.get_rect()
 minusRect.center = (100,100)
 plusRect.center = (200, 100)
 
-pixel1posX = realWindowW//2-pixelW//2 - 2*(pixelW+1.8)
-pixel1posY = realWindowH-realWindowH//4.65
+pixel1posX = realWindowW//2-pixelW//2 - 2*(pixelW+realWindowW/450)
+pixel1posY = realWindowH-realWindowH//4.75
 
 
 
@@ -53,14 +60,14 @@ pixelMatrix = [
                [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
                [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
                [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
-               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+               [[0,0,1],[0,0,0],[0,0,0],[0,0,1],[0,0,0],[0,0,0]],
                [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
                [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
-               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
-               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
-               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
-               [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
-               [[pixel1posX-pixelW//2-1.8,pixel1posY-pixelH+realWindowH//36,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+               [[0,0,0],[0,0,1],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+               [[0,0,0],[0,0,0],[0,0,0],[0,0,2],[0,0,0],[0,0,0]],
+               [[0,0,0],[0,0,0],[0,0,0],[0,0,2],[0,0,2],[0,0,1],[0,0,1]],
+               [[0,0,3],[0,0,4],[0,0,1],[0,0,1],[0,0,1],[0,0,1]],
+               [[pixel1posX-pixelW//2-1.8,pixel1posY-pixelH+realWindowH//44,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
                [[pixel1posX,pixel1posY,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]]
 
 for j in range(11,0,-2):
@@ -98,7 +105,14 @@ while running:
     for row in pixelMatrix:
         for pixelProp in row:
             pixelRect.center = (pixelProp[0], pixelProp[1])
-            screen.blit(pixel, pixelRect)
+            if pixelProp[2]==1:
+                screen.blit(pixel, pixelRect)
+            elif pixelProp[2]==2:
+                screen.blit(pixel_purple, pixelRect)
+            elif pixelProp[2]==3:
+                screen.blit(pixel_yellow, pixelRect)
+            elif pixelProp[2]==4:
+                screen.blit(pixel_green, pixelRect)
 
 
     """pygame.draw.circle(screen, "black", player_pos, 40)
