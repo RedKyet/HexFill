@@ -139,7 +139,21 @@ while running:
     #screen.blit(minusButton, minusRect)
     #screen.blit(plusButton, plusRect)
 
-    
+    if(y_pos==len(positions_Y)-1-2*4):
+        if lastpos%2==1:
+            pixelMatrix[9][lastpos//2][2] = 2
+
+    for row in pixelMatrix:
+        for pixelProp in row:
+            pixelRect.center = (pixelProp[0], pixelProp[1])
+            if pixelProp[2]==1:
+                screen.blit(pixel, pixelRect)
+            elif pixelProp[2]==3:
+                screen.blit(pixel_purple, pixelRect)
+            elif pixelProp[2]==2:
+                screen.blit(pixel_yellow, pixelRect)
+            elif pixelProp[2]==4:
+                screen.blit(pixel_green, pixelRect)
         
 
     keys = pygame.key.get_pressed()
@@ -157,23 +171,6 @@ while running:
     screen.blit(pixel_green, player_rect)
     
     pygame.draw.rect(screen, "black", pygame.Rect(0, 0, realWindowW, realWindowH/20))
-
-
-    if(y_pos==len(positions_Y)-2):
-        if lastpos%2==0:
-            pixelMatrix[9][lastpos//2][2] = 2
-
-    for row in pixelMatrix:
-        for pixelProp in row:
-            pixelRect.center = (pixelProp[0], pixelProp[1])
-            if pixelProp[2]==1:
-                screen.blit(pixel, pixelRect)
-            elif pixelProp[2]==3:
-                screen.blit(pixel_purple, pixelRect)
-            elif pixelProp[2]==2:
-                screen.blit(pixel_yellow, pixelRect)
-            elif pixelProp[2]==4:
-                screen.blit(pixel_green, pixelRect)
 
     pygame.display.flip()
     timer-=1
