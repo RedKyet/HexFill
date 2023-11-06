@@ -22,7 +22,9 @@ running = True
 dt = 0
 prev_key=pygame.K_ESCAPE
 lastpos =0
-
+y_pos = 0
+gravity_step = pixelH*0.72*0.5
+gravity_timer = 0
 
 #set sprites
 bg = pygame.image.load("Assets/board.png")
@@ -145,13 +147,22 @@ while running:
     
     player_rect = pixel_green.get_rect()
     player_rect.centerx=positions_X[lastpos]
-    player_rect.centery=screen.get_height() / 2
+    player_rect.centery=0+y_pos
     screen.blit(pixel_green, player_rect)
     
     pygame.draw.rect(screen, "black", pygame.Rect(0, 0, realWindowW, realWindowH/20))
 
     pygame.display.flip()
     timer-=1
+
+    #fall
+    
+    if gravity_timer>=30:
+        y_pos+=gravity_step
+        gravity_timer=0
+    gravity_timer+=1
+
+
     dt = clock.tick(60) / 1000
 
 pygame.quit()
