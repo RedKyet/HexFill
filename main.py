@@ -166,6 +166,10 @@ elif(text[2] == 4):
     img3 = font.render(text[0][2], True, (149, 232, 16))
 else:
     img3 = font.render(text[0][2], True, (255, 255, 255))
+    
+img4 = font.render(text[4][0], True, (254, 223, 3))
+img5 = font.render(text[4][1], True, (156, 141, 184))
+img6 = font.render(text[4][2], True, (149, 232, 16))
 
 prev_score = text[1]
 
@@ -266,7 +270,7 @@ while running:
             img2 = font.render(text[0][1], True, (255, 255, 255))
         else:
             img2 = font.render(text[0][1], True, (252, 3, 73))
-            
+        
         if(text[2] == 2):
             img3 = font.render(text[0][2], True, (254, 223, 3))
         elif(text[2] == 3):
@@ -276,7 +280,12 @@ while running:
         else:
             img3 = font.render(text[0][2], True, (255, 255, 255))
             
+        img4 = font.render(text[4][0], True, (254, 223, 3))
+        img5 = font.render(text[4][1], True, (156, 141, 184))
+        img6 = font.render(text[4][2], True, (149, 232, 16))
+        
         prev_score = text[1]
+        
 
 
     print((y_pos-2)/4+1)
@@ -339,6 +348,9 @@ while running:
     screen.blit(img1, (30, 550))
     screen.blit(img2, (30, 580))
     screen.blit(img3, (30, 595))
+    # screen.blit(img4, (30, 610))
+    # screen.blit(img5, (50, 610))
+    # screen.blit(img6, (70, 610))
     pygame.display.flip()
     
     dt = clock.tick(60) / 1000

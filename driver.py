@@ -126,12 +126,14 @@ def get_stats(mat, real_mat, prev_score):
                         green_best = max(green_best, add)
                         
                     score += add ** 2
-        return [score, highest_area, highest_color, [yellow_best, purple_best, green_best]]
+        return [score, highest_area, highest_color, [str(yellow_best), str(purple_best), str(green_best)]]
     
     result = calculate_score(mat)
     score = result[0]
     highest_area = result[1]
     highest_color = result[2]
+    
+    colors = result[3]
     
     score_diff = score - prev_score
     
@@ -159,7 +161,7 @@ def get_stats(mat, real_mat, prev_score):
     # elif highest_color == 5:
     #     highest_TEXT = '-1'
     
-    return [[score_TEXT, score_diff_TEXT, highest_TEXT], score, highest_color, is_negative]
+    return [[score_TEXT, score_diff_TEXT, highest_TEXT], score, highest_color, is_negative, colors]
 
 def bomb(mat, source):
     mat = fill(mat, source, 0)[1]
