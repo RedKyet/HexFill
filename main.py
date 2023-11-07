@@ -29,6 +29,7 @@ gravity_step = pixelH*0.72*0.5
 gravity_timer = 0
 velocity = 15
 
+
 #set sprites
 bg = pygame.image.load("Assets/board.png")
 #shooter = pygame.image.load("Assets/board.png")
@@ -38,6 +39,7 @@ pixel_green = pygame.image.load("Assets/pixel_green.png")
 pixel_yellow = pygame.image.load("Assets/pixel_yellow.png")
 plusButton = pygame.image.load("Assets/plus.png")
 minusButton = pygame.image.load("Assets/minus.png")
+player_sprite = pixel
 
 #scale sprites
 bg = pygame.transform.scale(bg, (realWindowW,realWindowH))
@@ -188,10 +190,11 @@ while running:
         gravity_timer=0
     gravity_timer+=1
 
-    #respawn
+    #pixel placed
     if y_pos>=len(positions_Y):
         y_pos=0
         x_pos=random.randrange(0,len(positions_X))
+
 
     #text
     
