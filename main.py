@@ -30,9 +30,9 @@ prev_key=pygame.K_ESCAPE
 x_pos = 6
 gravity_step = pixelH*0.72*0.5
 gravity_timer = 0
-velocity = 3
+velocity = 4
 
-place_sound = pygame.mixer.Sound("place.wav")
+place_sound = pygame.mixer.Sound("Assets/place.wav")
 
 #set sprites
 bg = pygame.image.load("Assets/board.png")
@@ -218,7 +218,7 @@ while running:
             if x_pos!=0: x_pos-=1
         if keys[pygame.K_d]:
             if x_pos!=12: x_pos+=1
-        timer=10
+        timer=5
     prev_key=keys
     
     player_rect = player_sprite.get_rect()
