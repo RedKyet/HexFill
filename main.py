@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import RESIZABLE
 from driver import get_stats
+import random
 
 import copy
 
@@ -24,10 +25,11 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 prev_key=pygame.K_ESCAPE
-lastpos =0
+x_pos = 6
 gravity_step = pixelH*0.72*0.5
 gravity_timer = 0
-velocity = 60
+velocity = 15
+
 
 #set sprites
 bg = pygame.image.load("Assets/board.png")
@@ -38,6 +40,7 @@ pixel_green = pygame.image.load("Assets/pixel_green.png")
 pixel_yellow = pygame.image.load("Assets/pixel_yellow.png")
 plusButton = pygame.image.load("Assets/plus.png")
 minusButton = pygame.image.load("Assets/minus.png")
+player_sprite = pixel
 
 #scale sprites
 bg = pygame.transform.scale(bg, (realWindowW,realWindowH))
@@ -131,23 +134,24 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-        if event.type == pygame.MOUSEBUTTONUP:
+        """if event.type == pygame.MOUSEBUTTONUP:
             if minusRect.collidepoint(event.pos):
                 print('minus')
             elif plusRect.collidepoint(event.pos):
-                print('plus')
+                print('plus')"""
 
     #set background
     screen.blit(bg, (realWindowW//2-bg.get_width()//2, realWindowH//2-bg.get_height()//2))
     #position ui
-    #screen.blit(minusButton, minusRect)
-    #screen.blit(plusButton, plusRect)
+    """
+    screen.blit(minusButton, minusRect)
+    screen.blit(plusButton, plusRect)"""
 
 
     #check if pixel can be placed
     if(y_pos==len(positions_Y)-1-2*4):
-        if lastpos%2==1:
-            pixelMatrix[9][lastpos//2][2] = 2
+        if x_pos%2==1:
+            pixelMatrix[9][x_pos//2][2] = 2
 
     for row in pixelMatrix:
         for pixelProp in row:
@@ -165,14 +169,14 @@ while running:
     keys = pygame.key.get_pressed()
     if keys!=prev_key or timer<=0:
         if keys[pygame.K_a]:
-            if lastpos!=0: lastpos-=1
+            if x_pos!=0: x_pos-=1
         if keys[pygame.K_d]:
-            if lastpos!=12: lastpos+=1
+            if x_pos!=12: x_pos+=1
         timer=10
     prev_key=keys
     
     player_rect = pixel_green.get_rect()
-    player_rect.centerx=positions_X[lastpos]
+    player_rect.centerx=positions_X[x_pos]
     player_rect.centery=positions_Y[y_pos]
     print(y_pos)
     screen.blit(pixel_green, player_rect)
@@ -188,6 +192,12 @@ while running:
         y_pos+=1
         gravity_timer=0
     gravity_timer+=1
+
+    #pixel placed
+    if y_pos>=len(positions_Y):
+        y_pos=0
+        x_pos=random.randrange(0,len(positions_X))
+
 
     #text
     
