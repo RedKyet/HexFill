@@ -48,11 +48,60 @@ def fill(mat, source, mode):
     recursion(source)
     return [sum, mat]
         
-def get_stats(mat, prev_score):
+def get_stats(mat, real_mat, prev_score):
     def calculate_score(mat):
         score = 0
         highest_area = 0
         highest_color = 0
+
+        for i in range(len(mat)):
+            for j in range(len(mat[i])):
+                if mat[i][j][2] == 5:
+                    bomb = 0;
+                    if(i - 1 >= 0):
+                        if(mat[i - 1][j][2] != 0):
+                            fill(real_mat, [i - 1, j, mat[i - 1][j][2]], 0)
+                            fill(mat, [i - 1, j, mat[i - 1][j][2]], 0)
+                            bomb = 1
+                    if(i + 1 < len(mat) and bomb == 0):
+                        if(mat[i + 1][j][2] != 0):
+                            fill(real_mat, [i + 1, j, mat[i + 1][j][2]], 0)
+                            fill(mat, [i + 1, j, mat[i + 1][j][2]], 0)
+                            bomb = 1
+                    if(j - 1 >= 0 and bomb == 0):
+                        if(mat[i][j - 1][2] != 0):
+                            fill(real_mat, [i, j - 1, mat[i][j - 1][2]], 0)
+                            fill(mat, [i, j - 1, mat[i][j - 1][2]], 0)
+                            bomb = 1
+                    if(j + 1 < len(mat[i]) and bomb == 0):
+                        if(mat[i][j + 1][2] != 0):
+                            fill(real_mat, [i, j + 1, mat[i][j + 1][2]], 0)
+                            fill(mat, [i, j + 1, mat[i][j + 1][2]], 0)
+                            bomb = 1       
+                    if(i % 2 == 1 and bomb == 0):
+                        if(i + 1 < len(mat) and j + 1 < len(mat[i + 1])):
+                            if(mat[i + 1][j + 1][2] != 0):
+                                fill(real_mat, [i + 1, j + 1, mat[i + 1][j + 1][2]], 0)
+                                fill(mat, [i + 1, j + 1, mat[i + 1][j + 1][2]], 0)
+                                bomb = 1
+                        if(bomb == 0 and i - 1 >= 0 and j + 1 < len(mat[i - 1])):
+                            if(mat[i - 1][j + 1][2] != 0):
+                                fill(real_mat, [i - 1, j + 1, mat[i - 1][j + 1][2]], 0)
+                                fill(mat, [i - 1, j + 1, mat[i - 1][j + 1][2]], 0)
+                                bomb = 1
+                    elif(bomb == 0):
+                        if(i + 1 < len(mat) and j - 1 >= 0):
+                            if(mat[i + 1][j + 1][2] != 0):
+                                fill(real_mat, [i + 1, j - 1, mat[i + 1][j - 1][2]], 0)
+                                fill(mat, [i + 1, j - 1, mat[i + 1][j - 1][2]], 0)
+                                bomb = 1
+                        elif(bomb == 0 and i - 1 >= 0 and j - 1 >= 0):
+                            if(mat[i - 1][j - 1][2] != 0):
+                                fill(real_mat, [i - 1, j - 1, mat[i - 1][j - 1][2]], 0)
+                                fill(mat, [i - 1, j - 1, mat[i - 1][j - 1][2]], 0)
+                                bomb = 1
+                            
+                        
 
         for i in range(len(mat)):
             for j in range(len(mat[i])):
@@ -142,7 +191,7 @@ test_mat = [
 # [[0, 0, 2], [0, 0, 0], [0, 0, 2], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 10
 # [[0, 0, 2], [0, 0, 2], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 11 (BOTTOM)
 # ]
-text = get_stats(test_mat, 0)
+text = get_stats(test_mat, test_mat, 0)
 """print(text[0])
 print(text[1])
 print(text[2])"""
