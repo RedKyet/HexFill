@@ -48,7 +48,7 @@ def fill(mat, source, mode):
     recursion(source)
     return [sum, mat]
         
-def master(mat, prev_score):
+def get_stats(mat, prev_score):
     def calculate_score(mat):
         score = 0
         highest_area = 0
@@ -133,7 +133,7 @@ test_mat = [
 # [[0, 0, 2], [0, 0, 0], [0, 0, 2], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 10
 # [[0, 0, 2], [0, 0, 2], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 11 (BOTTOM)
 # ]
-text = master(test_mat, 0)
+text = get_stats(test_mat, 0)
 print(text[0])
 print(text[1])
 print(text[2])
