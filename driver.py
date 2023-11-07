@@ -104,6 +104,10 @@ def get_stats(mat, real_mat, prev_score):
                     real_mat[i][j][2] = 0
                     mat[i][j][2] = 0
 
+        yellow_best = 0
+        purple_best = 0
+        green_best = 0
+
         for i in range(len(mat)):
             for j in range(len(mat[i])):
                 if mat[i][j][2] != 0 and mat[i][j][2] != 1:
@@ -114,9 +118,15 @@ def get_stats(mat, real_mat, prev_score):
                     if add > highest_area:
                         highest_area = add
                         highest_color = color
+                    if color == 2:
+                        yellow_best = max(yellow_best, add)
+                    if color == 3:
+                        purple_best = max(purple_best, add)
+                    if color == 4:
+                        green_best = max(green_best, add)
                         
                     score += add ** 2
-        return [score, highest_area, highest_color]
+        return [score, highest_area, highest_color, [yellow_best, purple_best, green_best]]
     
     result = calculate_score(mat)
     score = result[0]
