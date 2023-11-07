@@ -28,7 +28,7 @@ prev_key=pygame.K_ESCAPE
 x_pos = 6
 gravity_step = pixelH*0.72*0.5
 gravity_timer = 0
-velocity = 15
+velocity = 5
 
 
 #set sprites
@@ -78,6 +78,21 @@ pixelMatrix = [
 [[0, 0, 4], [0, 0, 4], [0, 0, 2], [0, 0, 1], [0, 0, 2], [0, 0, 3]],             # 9
 [[pixel1posX-pixelW//2-1.8,pixel1posY-pixelH+realWindowH//44, 1], [0, 0, 2], [0, 0, 2], [0, 0, 2], [0, 0, 3], [0, 0, 2], [0, 0, 2]],  # 10
 [[pixel1posX,pixel1posY, 1], [0, 0, 1], [0, 0, 2], [0, 0, 2], [0, 0, 2], [0, 0, 2]],             # 11 (BOTTOM)
+]
+
+pixelMatrix = [
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 0 (TOP)
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 1
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 2
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 3
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 4
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 4], [0, 0, 4], [0, 0, 4]],             # 5
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 4], [0, 0, 4], [0, 0, 4], [0, 0, 1]],  # 6
+[[0, 0, 0], [0, 0, 0], [0, 0, 4], [0, 0, 4], [0, 0, 1], [0, 0, 1]],             # 7
+[[0, 0, 0], [0, 0, 0], [0, 0, 2], [0, 0, 1], [0, 0, 1], [0, 0, 0], [0, 0, 0]],  # 8
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 9
+[[pixel1posX-pixelW//2-1.8,pixel1posY-pixelH+realWindowH//44, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 10
+[[pixel1posX,pixel1posY, 0], [0, 0, 1], [0, 0, 2], [0, 0, 2], [0, 0, 2], [0, 0, 2]],             # 11 (BOTTOM)
 ]
 
 
@@ -215,10 +230,21 @@ while running:
     gravity_timer+=1
 
     #pixel placed
-    if y_pos>=len(positions_Y):
+
+    def respawn():
+        global y_pos
+        global x_pos
+        global player_sprite
+        global img1
+        global img2
+        global img3
+        global prev_score
+
         y_pos=0
         x_pos=random.randrange(0,len(positions_X))
         player_sprite = random.choice(sprites)
+
+
 
         #update score
         score_mat = copy.deepcopy(pixelMatrix)
@@ -235,6 +261,9 @@ while running:
         else:
             img3 = font.render(text[0][2], True, (255, 255, 255))
         prev_score = text[1]
+    if y_pos>=len(positions_Y) or y_pos>=len(positions_Y)-2 and x_pos%2==0:
+        respawn()
+        
 
     screen.blit(img1, (30, 550))
     screen.blit(img2, (30, 580))
