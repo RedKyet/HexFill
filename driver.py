@@ -97,7 +97,7 @@ def get_stats(mat, prev_score):
     # elif highest_color == 5:
     #     highest_TEXT = '-1'
     
-    return [score_TEXT, score_diff_TEXT, highest_TEXT, highest_color]
+    return [[score_TEXT, score_diff_TEXT, highest_TEXT], score, highest_color]
 
 # def bomb(mat, source):
 #     mat = fill(mat, source, 0)[1]
