@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import RESIZABLE
 from driver import get_stats
+from driver import bomb
 import random
 import math
 
@@ -158,7 +159,7 @@ if(text[2] == 2):
 elif(text[2] == 3):
     img3 = font.render(text[0][2], True, (156, 141, 184))
 elif(text[2] == 4):
-    img3 = font.render(text[0][2], True, (198, 216, 43))
+    img3 = font.render(text[0][2], True, (149, 232, 16))
 else:
     img3 = font.render(text[0][2], True, (255, 255, 255))
 
@@ -166,6 +167,8 @@ prev_score = text[1]
 
 while running:
 
+    # bomb
+    # bomb(pixelMatrix, [x, y, color])
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -262,7 +265,7 @@ while running:
         elif(text[2] == 3):
             img3 = font.render(text[0][2], True, (156, 141, 184))
         elif(text[2] == 4):
-            img3 = font.render(text[0][2], True, (198, 216, 43))
+            img3 = font.render(text[0][2], True, (149, 232, 16))
         else:
             img3 = font.render(text[0][2], True, (255, 255, 255))
             
