@@ -101,7 +101,8 @@ def get_stats(mat, real_mat, prev_score):
                                 fill(mat, [i - 1, j - 1, mat[i - 1][j - 1][2]], 0)
                                 bomb = 1
                             
-                        
+                    real_mat[i][j][2] = 0
+                    mat[i][j][2] = 0
 
         for i in range(len(mat)):
             for j in range(len(mat[i])):
