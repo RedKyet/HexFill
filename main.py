@@ -148,7 +148,7 @@ prev_score = 0
 
 #update score
 score_mat = copy.deepcopy(pixelMatrix)
-text = get_stats(score_mat, prev_score)
+text = get_stats(score_mat, pixelMatrix, prev_score)
 
 font = pygame.font.Font("Assets\\AvenirLTStd-Black.otf", 12)
 big_font = pygame.font.Font("Assets\\AvenirLTStd-Black.otf", 20)
@@ -251,7 +251,7 @@ while running:
 
         #update score
         score_mat = copy.deepcopy(pixelMatrix)
-        text = get_stats(score_mat, prev_score)
+        text = get_stats(score_mat, pixelMatrix, prev_score)
         
         img1 = big_font.render(text[0][0], True, (255, 255, 255))
         
