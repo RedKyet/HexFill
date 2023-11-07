@@ -29,7 +29,7 @@ prev_key=pygame.K_ESCAPE
 x_pos = 6
 gravity_step = pixelH*0.72*0.5
 gravity_timer = 0
-velocity = 5
+velocity = 3
 
 
 #set sprites
@@ -286,6 +286,12 @@ while running:
                 print("YES")
                 pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
                 respawn()
+            elif x_pos%2==0 and pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
+                x_pos+=random.choice((-1,1))
+            elif x_pos!=12 and x_pos!=0 and pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2] :
+                x_pos+=1
+            elif x_pos!=12 and x_pos!=0 and pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
+                x_pos-=1
         else:
             if x_pos<=1 and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2] and pixelMatrix[y_posInMatrix+1][(x_pos+2)//2][2]:
                 pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
@@ -297,6 +303,12 @@ while running:
                 print("YES")
                 pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
                 respawn()
+            elif x_pos%2==1 and pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
+                x_pos+=random.choice((-1,1))
+            elif x_pos!=12 and x_pos!=0 and pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
+                x_pos+=1
+            elif x_pos!=12 and x_pos!=0 and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
+                x_pos-=1
 
     else:
         if y_pos>=len(positions_Y) and x_pos%2==1:
