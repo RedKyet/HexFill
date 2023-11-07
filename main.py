@@ -251,7 +251,7 @@ while running:
 
         y_pos=0
         x_pos=random.randrange(0,len(positions_X))
-        player_sprite = random.choice((random.choice(sprites),random.choice(sprites_nobomb),random.choice(sprites_nobomb),random.choice(sprites_nobomb),random.choice(sprites_nobomb),random.choice(sprites_nobomb),random.choice(sprites_nobomb)))
+        player_sprite = random.choice((random.choice(sprites),random.choice(sprites_nobomb),random.choice(sprites_nobomb)))
         pygame.mixer.Sound.play(place_sound)
         pygame.mixer.music.stop()
 
