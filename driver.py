@@ -75,12 +75,14 @@ def get_stats(mat, prev_score):
     
     score_diff = score - prev_score
     
+    is_negative = False
     if(score_diff > 0):
         score_diff_TEXT = '+ ' + str(score_diff) + ' pentru ultimul pixel plasat!'
     elif(score_diff == 0):
         score_diff_TEXT = 'Plaseaza un pixel!'
     else:
         score_diff_TEXT = '- ' + str(-score_diff) + ' pentru ultimul pixel plasat!'
+        is_negative = True
     
     score_TEXT = str(score)
     
@@ -97,7 +99,7 @@ def get_stats(mat, prev_score):
     # elif highest_color == 5:
     #     highest_TEXT = '-1'
     
-    return [[score_TEXT, score_diff_TEXT, highest_TEXT], score, highest_color]
+    return [[score_TEXT, score_diff_TEXT, highest_TEXT], score, highest_color, is_negative]
 
 # def bomb(mat, source):
 #     mat = fill(mat, source, 0)[1]
