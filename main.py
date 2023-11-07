@@ -34,7 +34,7 @@ velocity = 3
 
 place_sound = pygame.mixer.Sound("Assets/place.wav")
 pygame.mixer.music.load('Assets/track.wav')
-pygame.mixer.music.set_volume(0.2)
+pygame.mixer.music.set_volume(0)
 pygame.mixer.music.play(-1)
 
 #set sprites
