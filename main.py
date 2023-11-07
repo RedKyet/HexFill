@@ -40,7 +40,6 @@ pixel_green = pygame.image.load("Assets/pixel_green.png")
 pixel_yellow = pygame.image.load("Assets/pixel_yellow.png")
 plusButton = pygame.image.load("Assets/plus.png")
 minusButton = pygame.image.load("Assets/minus.png")
-player_sprite = pixel
 
 #scale sprites
 bg = pygame.transform.scale(bg, (realWindowW,realWindowH))
@@ -51,6 +50,8 @@ pixel_purple = pygame.transform.smoothscale(pixel_purple.convert_alpha(), (pixel
 pixel_green = pygame.transform.smoothscale(pixel_green.convert_alpha(), (pixelW,pixelH))
 pixel_yellow = pygame.transform.smoothscale(pixel_yellow.convert_alpha(), (pixelW,pixelH))
 
+player_sprite = pixel
+sprites = (pixel,pixel_yellow,pixel_purple,pixel_green)
 
 minusRect = minusButton.get_rect()
 plusRect = plusButton.get_rect()
@@ -175,11 +176,11 @@ while running:
         timer=10
     prev_key=keys
     
-    player_rect = pixel_green.get_rect()
+    player_rect = player_sprite.get_rect()
     player_rect.centerx=positions_X[x_pos]
     player_rect.centery=positions_Y[y_pos]
     print(y_pos)
-    screen.blit(pixel_green, player_rect)
+    screen.blit(player_sprite, player_rect)
     
     pygame.draw.rect(screen, "black", pygame.Rect(0, 0, realWindowW, realWindowH/20))
 
@@ -197,6 +198,7 @@ while running:
     if y_pos>=len(positions_Y):
         y_pos=0
         x_pos=random.randrange(0,len(positions_X))
+        player_sprite = random.choice(sprites)
 
 
     #text
