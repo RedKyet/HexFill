@@ -91,19 +91,19 @@ def get_stats(mat, prev_score):
         
     highest_TEXT = ''
     if highest_color == 2:
-        highest_TEXT = 'Cea mai mare zona este galbena! (' + str(highest_area) + ' pixeli)'
+        highest_TEXT = 'Cea mai mare zona este galbena! (' + str(highest_area) + ' pixeli, ' + str(highest_area ** 2) + ' puncte)'
     elif highest_color == 3:
-        highest_TEXT = 'Cea mai mare zona este mov! (' + str(highest_area) + ' pixeli)'
+        highest_TEXT = 'Cea mai mare zona este mov! (' + str(highest_area) + ' pixeli, ' + str(highest_area ** 2) + ' puncte)'
     elif highest_color == 4:
-        highest_TEXT = 'Cea mai mare zona este verde! (' + str(highest_area) + ' pixeli)'
+        highest_TEXT = 'Cea mai mare zona este verde! (' + str(highest_area) + ' pixeli, ' + str(highest_area ** 2) + ' puncte)'
     # elif highest_color == 5:
     #     highest_TEXT = '-1'
     
     return [[score_TEXT, score_diff_TEXT, highest_TEXT], score, highest_color, is_negative]
 
-# def bomb(mat, source):
-#     mat = fill(mat, source, 0)[1]
-#     return mat
+def bomb(mat, source):
+    mat = fill(mat, source, 0)[1]
+    return mat
     
 # def bleach(mat, source):
 #     mat = fill(mat, source, 1)[1]
