@@ -251,7 +251,12 @@ while running:
         text = get_stats(score_mat, prev_score)
         
         img1 = big_font.render(text[0][0], True, (255, 255, 255))
-        img2 = font.render(text[0][1], True, (255, 255, 255))
+        
+        if(text[3] == False):
+            img2 = font.render(text[0][1], True, (255, 255, 255))
+        else:
+            img2 = font.render(text[0][1], True, (252, 3, 73))
+            
         if(text[2] == 2):
             img3 = font.render(text[0][2], True, (254, 223, 3))
         elif(text[2] == 3):
@@ -260,6 +265,7 @@ while running:
             img3 = font.render(text[0][2], True, (198, 216, 43))
         else:
             img3 = font.render(text[0][2], True, (255, 255, 255))
+            
         prev_score = text[1]
     if y_pos>=len(positions_Y) or y_pos>=len(positions_Y)-2 and x_pos%2==0:
         respawn()
