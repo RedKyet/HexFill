@@ -129,7 +129,27 @@ print(positions_X)
 
 prev_score = 0
 
+#update score
+score_mat = copy.deepcopy(pixelMatrix)
+text = get_stats(score_mat, prev_score)
+
+font = pygame.font.Font("Assets\\AvenirLTStd-Black.otf", 12)
+big_font = pygame.font.Font("Assets\\AvenirLTStd-Black.otf", 20)
+img1 = big_font.render(text[0][0], True, (255, 255, 255))
+img2 = font.render(text[0][1], True, (255, 255, 255))
+if(text[2] == 2):
+    img3 = font.render(text[0][2], True, (254, 223, 3))
+elif(text[2] == 3):
+    img3 = font.render(text[0][2], True, (156, 141, 184))
+elif(text[2] == 4):
+    img3 = font.render(text[0][2], True, (198, 216, 43))
+else:
+    img3 = font.render(text[0][2], True, (255, 255, 255))
+
+prev_score = text[1]
+
 while running:
+
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -200,30 +220,26 @@ while running:
         x_pos=random.randrange(0,len(positions_X))
         player_sprite = random.choice(sprites)
 
+        #update score
+        score_mat = copy.deepcopy(pixelMatrix)
+        text = get_stats(score_mat, prev_score)
+        
+        img1 = big_font.render(text[0][0], True, (255, 255, 255))
+        img2 = font.render(text[0][1], True, (255, 255, 255))
+        if(text[2] == 2):
+            img3 = font.render(text[0][2], True, (254, 223, 3))
+        elif(text[2] == 3):
+            img3 = font.render(text[0][2], True, (156, 141, 184))
+        elif(text[2] == 4):
+            img3 = font.render(text[0][2], True, (198, 216, 43))
+        else:
+            img3 = font.render(text[0][2], True, (255, 255, 255))
+        prev_score = text[1]
 
-    #text
-    
-    score_mat = copy.deepcopy(pixelMatrix)
-    text = get_stats(score_mat, prev_score)
-    
-    font = pygame.font.Font("Assets\\AvenirLTStd-Black.otf", 12)
-    big_font = pygame.font.Font("Assets\\AvenirLTStd-Black.otf", 20)
-    img1 = big_font.render(text[0][0], True, (255, 255, 255))
-    img2 = font.render(text[0][1], True, (255, 255, 255))
-    if(text[2] == 2):
-        img3 = font.render(text[0][2], True, (254, 223, 3))
-    elif(text[2] == 3):
-        img3 = font.render(text[0][2], True, (156, 141, 184))
-    elif(text[2] == 4):
-        img3 = font.render(text[0][2], True, (198, 216, 43))
-    else:
-        img3 = font.render(text[0][2], True, (255, 255, 255))
     screen.blit(img1, (30, 550))
     screen.blit(img2, (30, 580))
     screen.blit(img3, (30, 595))
     pygame.display.flip()
-    
-    prev_score = text[1]
     
     dt = clock.tick(60) / 1000
     
