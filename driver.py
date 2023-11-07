@@ -75,18 +75,25 @@ def get_stats(mat, prev_score):
     
     score_diff = score - prev_score
     
+    if(score_diff > 0):
+        score_diff_TEXT = '+ ' + str(score_diff) + ' pentru ultimul pixel plasat!'
+    elif(score_diff == 0):
+        score_diff_TEXT = 'Plaseaza un pixel!'
+    else:
+        score_diff_TEXT = '- ' + str(-score_diff) + ' pentru ultimul pixel plasat!'
+    
     score_TEXT = str(score)
-    score_diff_TEXT = '+ ' + str(score_diff)
+    
     if(score_diff > 5):
         score_diff_TEXT += ' Combo!'
         
     highest_TEXT = ''
     if highest_color == 2:
-        highest_TEXT = 'Cea mai mare zonă este galbenă! (' + str(highest_area) + ' pixeli)'
+        highest_TEXT = 'Cea mai mare zona este galbena! (' + str(highest_area) + ' pixeli)'
     elif highest_color == 3:
-        highest_TEXT = 'Cea mai mare zonă este mov! (' + str(highest_area) + ' pixeli)'
+        highest_TEXT = 'Cea mai mare zona este mov! (' + str(highest_area) + ' pixeli)'
     elif highest_color == 4:
-        highest_TEXT = 'Cea mai mare zonă este verde! (' + str(highest_area) + ' pixeli)'
+        highest_TEXT = 'Cea mai mare zona este verde! (' + str(highest_area) + ' pixeli)'
     # elif highest_color == 5:
     #     highest_TEXT = '-1'
     

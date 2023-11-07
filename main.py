@@ -7,6 +7,7 @@ import copy
 
 # window setup
 
+pygame.display.set_caption('Hexfill')
 WINDOW_H_base = 637
 WINDOW_W_base = 360
 displayMultiplier = 1
@@ -125,6 +126,8 @@ print(positions_X)
 #pixelRect.center = (pixelMatrix[9][1][0],pixelMatrix[9][1][1])
 #pixelRect.center = (pixelMatrix[10][0][0],pixelMatrix[10][0][1])
 
+prev_score = 0
+
 while running:
 
     for event in pygame.event.get():
@@ -199,17 +202,21 @@ while running:
     #text
     
     score_mat = copy.deepcopy(pixelMatrix)
-    text = get_stats(score_mat, 0)
+    text = get_stats(score_mat, prev_score)
     
-    font = pygame.font.Font(None, 36)
-    img1 = font.render(text[0], True, (0, 0, 0))
-    img2 = font.render(text[1], True, (0, 0, 0))
-    img3 = font.render(text[2], True, (0, 0, 0))
-    screen.blit(img1, (130, 600))
-    screen.blit(img2, (130, 610))
-    screen.blit(img3, (130, 620))
-    # print(text[0], text[1], text[2])
+    font = pygame.font.Font("Assets\\AvenirLTStd-Black.otf", 12)
+    big_font = pygame.font.Font("Assets\\AvenirLTStd-Black.otf", 20)
+    img1 = big_font.render(text[0], True, (255, 255, 255))
+    img2 = font.render(text[1], True, (255, 255, 255))
+    img3 = font.render(text[2], True, (255, 255, 255))
+    screen.blit(img1, (30, 550))
+    screen.blit(img2, (30, 580))
+    screen.blit(img3, (30, 600))
+    pygame.display.flip()
+    
+    prev_score = (int)(text[0])
     
     dt = clock.tick(60) / 1000
+    
 
 pygame.quit()
