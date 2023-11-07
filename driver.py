@@ -134,6 +134,6 @@ test_mat = [
 # [[0, 0, 2], [0, 0, 2], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 11 (BOTTOM)
 # ]
 text = get_stats(test_mat, 0)
-print(text[0])
+"""print(text[0])
 print(text[1])
-print(text[2])
+print(text[2])"""
