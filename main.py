@@ -196,15 +196,22 @@ while running:
     
     font = pygame.font.Font("Assets\\AvenirLTStd-Black.otf", 12)
     big_font = pygame.font.Font("Assets\\AvenirLTStd-Black.otf", 20)
-    img1 = big_font.render(text[0], True, (255, 255, 255))
-    img2 = font.render(text[1], True, (255, 255, 255))
-    img3 = font.render(text[2], True, (255, 255, 255))
+    img1 = big_font.render(text[0][0], True, (255, 255, 255))
+    img2 = font.render(text[0][1], True, (255, 255, 255))
+    if(text[2] == 2):
+        img3 = font.render(text[0][2], True, (254, 223, 3))
+    elif(text[2] == 3):
+        img3 = font.render(text[0][2], True, (156, 141, 184))
+    elif(text[2] == 4):
+        img3 = font.render(text[0][2], True, (198, 216, 43))
+    else:
+        img3 = font.render(text[0][2], True, (255, 255, 255))
     screen.blit(img1, (30, 550))
     screen.blit(img2, (30, 580))
-    screen.blit(img3, (30, 600))
+    screen.blit(img3, (30, 595))
     pygame.display.flip()
     
-    prev_score = (int)(text[0])
+    prev_score = text[1]
     
     dt = clock.tick(60) / 1000
     
