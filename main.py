@@ -30,7 +30,7 @@ prev_key=pygame.K_ESCAPE
 x_pos = 6
 gravity_step = pixelH*0.72*0.5
 gravity_timer = 0
-velocity = 5
+velocity = 3
 
 
 #set sprites
@@ -41,6 +41,7 @@ pixel_purple = pygame.image.load("Assets/pixel_purple.png")
 pixel_green = pygame.image.load("Assets/pixel_green.png")
 pixel_yellow = pygame.image.load("Assets/pixel_yellow.png")
 plusButton = pygame.image.load("Assets/plus.png")
+bomba = pygame.image.load("Assets/bomb.png")
 minusButton = pygame.image.load("Assets/minus.png")
 
 #scale sprites
@@ -51,9 +52,11 @@ pixel = pygame.transform.smoothscale(pixel.convert_alpha(), (pixelW,pixelH))
 pixel_purple = pygame.transform.smoothscale(pixel_purple.convert_alpha(), (pixelW,pixelH))
 pixel_green = pygame.transform.smoothscale(pixel_green.convert_alpha(), (pixelW,pixelH))
 pixel_yellow = pygame.transform.smoothscale(pixel_yellow.convert_alpha(), (pixelW,pixelH))
+bomba = pygame.transform.smoothscale(bomba.convert_alpha(), (pixelW,pixelH))
 
 player_sprite = pixel
-sprites = (pixel,pixel_yellow,pixel_purple,pixel_green)
+sprites = (pixel,pixel_yellow,pixel_purple,pixel_green,bomba)
+sprites_nobomb = (pixel,pixel_yellow,pixel_purple,pixel_green)
 
 minusRect = minusButton.get_rect()
 plusRect = plusButton.get_rect()
@@ -204,6 +207,8 @@ while running:
                 screen.blit(pixel_yellow, pixelRect)
             elif pixelProp[2]==4:
                 screen.blit(pixel_green, pixelRect)
+            elif pixelProp[2]==5:
+                screen.blit(bomba, pixelRect)
         
 
     keys = pygame.key.get_pressed()
@@ -245,8 +250,8 @@ while running:
 
         y_pos=0
         x_pos=random.randrange(0,len(positions_X))
-        player_sprite = random.choice(sprites)
-
+        player_sprite = random.choice((random.choice(sprites),random.choice(sprites_nobomb),random.choice(sprites_nobomb),random.choice(sprites_nobomb),random.choice(sprites_nobomb),random.choice(sprites_nobomb),random.choice(sprites_nobomb)))
+        
 
 
         #update score
@@ -289,6 +294,12 @@ while running:
                 print("YES")
                 pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
                 respawn()
+            elif x_pos!=12 and x_pos!=0 and x_pos%2==0 and pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
+                x_pos+=random.choice((-1,1))
+            elif x_pos!=12 and x_pos!=0 and pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2] :
+                x_pos+=1
+            elif x_pos!=12 and x_pos!=0 and pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
+                x_pos-=1
         else:
             if x_pos<=1 and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2] and pixelMatrix[y_posInMatrix+1][(x_pos+2)//2][2]:
                 pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
@@ -300,6 +311,12 @@ while running:
                 print("YES")
                 pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
                 respawn()
+            elif x_pos!=12 and x_pos!=0 and x_pos%2==1 and pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
+                x_pos+=random.choice((-1,1))
+            elif x_pos!=12 and x_pos!=0 and pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
+                x_pos+=1
+            elif x_pos!=12 and x_pos!=0 and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
+                x_pos-=1
 
     else:
         if y_pos>=len(positions_Y) and x_pos%2==1:
