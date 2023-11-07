@@ -30,9 +30,12 @@ prev_key=pygame.K_ESCAPE
 x_pos = 6
 gravity_step = pixelH*0.72*0.5
 gravity_timer = 0
-velocity = 4
+velocity = 3
 
 place_sound = pygame.mixer.Sound("Assets/place.wav")
+pygame.mixer.music.load('Assets/track.wav')
+pygame.mixer.music.set_volume(0.2)
+pygame.mixer.music.play(-1)
 
 #set sprites
 bg = pygame.image.load("Assets/board.png")
@@ -255,7 +258,7 @@ while running:
 
         y_pos=0
         x_pos=random.randrange(0,len(positions_X))
-        player_sprite = random.choice((random.choice(sprites),random.choice(sprites_nobomb),random.choice(sprites_nobomb)))
+        player_sprite = random.choice((random.choice(sprites),random.choice(sprites_nobomb)))
         pygame.mixer.Sound.play(place_sound)
         pygame.mixer.music.stop()
 
