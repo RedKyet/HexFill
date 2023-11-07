@@ -3,6 +3,7 @@ from pygame.locals import RESIZABLE
 from driver import get_stats
 from driver import bomb
 import random
+import math
 
 import copy
 
@@ -87,13 +88,13 @@ pixelMatrix = [
 [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 2
 [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 3
 [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 4
-[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 4], [0, 0, 4], [0, 0, 4]],             # 5
-[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 4], [0, 0, 4], [0, 0, 4], [0, 0, 1]],  # 6
-[[0, 0, 0], [0, 0, 0], [0, 0, 4], [0, 0, 4], [0, 0, 1], [0, 0, 1]],             # 7
-[[0, 0, 0], [0, 0, 0], [0, 0, 2], [0, 0, 1], [0, 0, 1], [0, 0, 0], [0, 0, 0]],  # 8
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 5
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 6
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 7
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 8
 [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 9
 [[pixel1posX-pixelW//2-1.8,pixel1posY-pixelH+realWindowH//44, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],  # 10
-[[pixel1posX,pixel1posY, 0], [0, 0, 1], [0, 0, 2], [0, 0, 2], [0, 0, 2], [0, 0, 2]],             # 11 (BOTTOM)
+[[pixel1posX,pixel1posY, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],             # 11 (BOTTOM)
 ]
 
 
@@ -187,10 +188,10 @@ while running:
     screen.blit(plusButton, plusRect)"""
 
 
-    #check if pixel can be placed
+    """#check if pixel can be placed
     if(y_pos==len(positions_Y)-1-2*4):
         if x_pos%2==1:
-            pixelMatrix[9][x_pos//2][2] = 2
+            pixelMatrix[9][x_pos//2][2] = 2"""
 
     for row in pixelMatrix:
         for pixelProp in row:
@@ -222,7 +223,6 @@ while running:
     
     pygame.draw.rect(screen, "black", pygame.Rect(0, 0, realWindowW, realWindowH/20))
 
-    pygame.display.flip()
     timer-=1
 
     #fall
@@ -270,8 +270,51 @@ while running:
             img3 = font.render(text[0][2], True, (255, 255, 255))
             
         prev_score = text[1]
-    if y_pos>=len(positions_Y) or y_pos>=len(positions_Y)-2 and x_pos%2==0:
-        respawn()
+
+
+    print((y_pos-2)/4+1)
+    print('ypos')
+    print(math.trunc((y_pos-10)/4+1))
+
+    y_posInMatrix=math.trunc((y_pos-10)/4)
+    if y_posInMatrix+1<12 and y_posInMatrix+1>=0:
+        if y_posInMatrix%2==0:
+            if x_pos==0 and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
+                pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
+                respawn()
+            elif x_pos==12 and pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2]:
+                pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
+                respawn()
+            elif pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2] and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
+                print("YES")
+                pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
+                respawn()
+        else:
+            if x_pos<=1 and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2] and pixelMatrix[y_posInMatrix+1][(x_pos+2)//2][2]:
+                pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
+                respawn()
+            elif x_pos>=11 and pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2] and pixelMatrix[y_posInMatrix+1][(x_pos-2)//2][2]:
+                pixelMatrix[y_posInMatrix][(x_pos-1)//2][2] = sprites.index(player_sprite)+1
+                respawn()
+            elif pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2] and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
+                print("YES")
+                pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
+                respawn()
+
+    else:
+        if y_pos>=len(positions_Y) and x_pos%2==1:
+            pixelMatrix[11][x_pos//2][2] = sprites.index(player_sprite)+1
+            respawn()
+        elif y_pos>=len(positions_Y)-2 and x_pos%2==0:
+            if x_pos == 0 or pixelMatrix[11][x_pos//2-1][2] and x_pos != 12:
+                pixelMatrix[11][x_pos//2][2] = sprites.index(player_sprite)+1
+            elif x_pos == 12 or pixelMatrix[11][x_pos//2][2] and x_pos != 0:
+                pixelMatrix[11][x_pos//2-1][2] = sprites.index(player_sprite)+1
+            elif x_pos !=12 and x_pos!=0:
+                pixelMatrix[11][random.choice((x_pos//2-1,x_pos//2))][2] = sprites.index(player_sprite)+1
+            respawn()
+
+
         
 
     screen.blit(img1, (30, 550))
