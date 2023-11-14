@@ -128,10 +128,10 @@ for i in range(10):
     positions_Y.insert(0,positions_Y[0]-(positions_Y[1]-positions_Y[0]))
 
 y_pos = 0
-print("YGREC")
-print(positions_Y)
+"""    print("YGREC")
+    print(positions_Y)
 
-print(positions_X)
+    print(positions_X)"""
 #pixelRect.center = (pixelMatrix[9][1][0],pixelMatrix[9][1][1])
 #pixelRect.center = (pixelMatrix[10][0][0],pixelMatrix[10][0][1])
 
@@ -215,7 +215,7 @@ while running:
     player_rect = player_sprite.get_rect()
     player_rect.centerx=positions_X[x_pos]
     player_rect.centery=positions_Y[y_pos]
-    print(y_pos)
+    """print(y_pos)"""
     screen.blit(player_sprite, player_rect)
     
     pygame.draw.rect(screen, "black", pygame.Rect(0, 0, realWindowW, realWindowH/20))
@@ -275,9 +275,9 @@ while running:
         
 
 
-    print((y_pos-2)/4+1)
+    """print((y_pos-2)/4+1)
     print('ypos')
-    print(math.trunc((y_pos-10)/4+1))
+    print(math.trunc((y_pos-10)/4+1))"""
 
     y_posInMatrix=math.trunc((y_pos-10)/4)
     if y_posInMatrix+1<12 and y_posInMatrix+1>=0:
@@ -292,30 +292,36 @@ while running:
                 print("YES")
                 pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
                 respawn()
-            elif x_pos!=12 and x_pos!=0 and x_pos%2==0 and pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
+            """elif x_pos!=12 and x_pos!=0 and x_pos%2==0 and pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
                 x_pos+=random.choice((-1,1))
             elif x_pos!=12 and x_pos!=0 and pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2] :
                 x_pos+=1
             elif x_pos!=12 and x_pos!=0 and pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
-                x_pos-=1
+                x_pos-=1"""
+            
         else:
-            if x_pos<=1 and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2] and pixelMatrix[y_posInMatrix+1][(x_pos+2)//2][2]:
-                pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
-                respawn()
-            elif x_pos>=11 and pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2] and pixelMatrix[y_posInMatrix+1][(x_pos-2)//2][2]:
-                pixelMatrix[y_posInMatrix][(x_pos-1)//2][2] = sprites.index(player_sprite)+1
-                respawn()
-            elif pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2] and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
-                print("YES")
-                pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
-                respawn()
-            elif x_pos!=12 and x_pos!=0 and x_pos%2==1 and pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
-                x_pos+=random.choice((-1,1))
-            elif x_pos!=12 and x_pos!=0 and pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
-                x_pos+=1
-            elif x_pos!=12 and x_pos!=0 and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
-                x_pos-=1
+            down_middle_impar = pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]
+            down_left_impar = pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2]
+            down_right_impar = pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]
 
+            if x_pos%2==1:
+                if down_left_impar and down_right_impar:
+                    print("YES")
+                    pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
+                    respawn()
+                elif down_left_impar:
+                    x_pos+=1
+                elif down_right_impar:
+                    x_pos-=1
+
+            elif down_middle_impar:
+                if x_pos==0:
+                    x_pos+=1
+                elif x_pos==12:
+                    x_pos-=1
+                else:
+                    x_pos+=random.choice((-1,1))
+                
     else:
         if y_pos>=len(positions_Y) and x_pos%2==1:
             pixelMatrix[11][x_pos//2][2] = sprites.index(player_sprite)+1
