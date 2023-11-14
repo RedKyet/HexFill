@@ -205,11 +205,11 @@ while running:
 
     keys = pygame.key.get_pressed()
     if keys!=prev_key or timer<=0:
-        if keys[pygame.K_a]:
+        if keys[pygame.K_a] or keys[pygame.K_LEFT]:
             if x_pos!=0: x_pos-=1
-        if keys[pygame.K_d]:
+        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             if x_pos!=12: x_pos+=1
-        timer=5
+        timer=3
     prev_key=keys
     
     player_rect = player_sprite.get_rect()
@@ -288,7 +288,7 @@ while running:
             elif x_pos==12 and pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2]:
                 pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
                 respawn()
-            elif pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2] and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
+            elif x_pos<11 and pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2] and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
                 print("YES")
                 pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
                 respawn()
