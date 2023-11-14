@@ -280,41 +280,57 @@ while running:
     print(math.trunc((y_pos-10)/4+1))"""
 
     y_posInMatrix=math.trunc((y_pos-10)/4)
+    
     if y_posInMatrix+1<12 and y_posInMatrix+1>=0:
+
         if y_posInMatrix%2==0:
-            if x_pos==0 and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
-                pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
-                respawn()
-            elif x_pos==12 and pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2]:
-                pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
-                respawn()
-            elif x_pos<11 and pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2] and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
-                print("YES")
-                pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
-                respawn()
-            """elif x_pos!=12 and x_pos!=0 and x_pos%2==0 and pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
+        
+            if x_pos%2==0:
+                if x_pos == 0 or x_pos == 12:
+                    if x_pos == 0 and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
+                        pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
+                        respawn()
+                    elif x_pos == 12 and pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2]:
+                        pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
+                        respawn()
+                else:
+                    if pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2] and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
+                        pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
+                        respawn()
+                    elif pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2]:
+                        x_pos+=1
+                    elif pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
+                        x_pos-=1
+            elif pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
                 x_pos+=random.choice((-1,1))
-            elif x_pos!=12 and x_pos!=0 and pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2] :
-                x_pos+=1
-            elif x_pos!=12 and x_pos!=0 and pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
-                x_pos-=1"""
+
+
+
+
+            #if x_pos==0 and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
+            #    pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
+            #    respawn()
+            #elif x_pos==12 and pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2]:
+            #    pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
+            #    respawn()
+            #elif x_pos<11 and pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2] and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
+            #    print("YES")
+            #    pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
+            #    respawn()
             
         else:
-            down_middle_impar = pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]
-            down_left_impar = pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2]
-            down_right_impar = pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]
 
             if x_pos%2==1:
-                if down_left_impar and down_right_impar:
+                if pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2] and pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
                     print("YES")
                     pixelMatrix[y_posInMatrix][x_pos//2][2] = sprites.index(player_sprite)+1
                     respawn()
-                elif down_left_impar:
+                elif pixelMatrix[y_posInMatrix+1][(x_pos-1)//2][2]:
                     x_pos+=1
-                elif down_right_impar:
+                elif pixelMatrix[y_posInMatrix+1][(x_pos+1)//2][2]:
                     x_pos-=1
 
-            elif down_middle_impar:
+            elif pixelMatrix[y_posInMatrix+1][(x_pos)//2][2]:
                 if x_pos==0:
                     x_pos+=1
                 elif x_pos==12:
