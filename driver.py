@@ -58,22 +58,22 @@ def get_stats(mat, real_mat, prev_score):
             for j in range(len(mat[i])):
                 if mat[i][j][2] == 5:
                     bomb = 0;
-                    if(i - 1 >= 0 and j >= 0):
+                    if(i - 1 >= 0 and j - 1 >= 0 and j - 1 >= 0):
                         if(mat[i - 1][j][2] != 0):
                             fill(real_mat, [i - 1, j, mat[i - 1][j][2]], 0)
                             fill(mat, [i - 1, j, mat[i - 1][j][2]], 0)
                             bomb = 1
-                    if(i + 1 < len(mat) and j >= 0 and bomb == 0):
+                    if(i + 1 < len(mat) and j - 1 >= 0 and bomb == 0):
                         if(mat[i + 1][j][2] != 0):
                             fill(real_mat, [i + 1, j, mat[i + 1][j][2]], 0)
                             fill(mat, [i + 1, j, mat[i + 1][j][2]], 0)
                             bomb = 1
-                    if(i >= 0 and j - 1 >= 0 and bomb == 0):
+                    if(i - 1>= 0 and j - 1 >= 0 and bomb == 0):
                         if(mat[i][j - 1][2] != 0):
                             fill(real_mat, [i, j - 1, mat[i][j - 1][2]], 0)
                             fill(mat, [i, j - 1, mat[i][j - 1][2]], 0)
                             bomb = 1
-                    if(i >= 0 and j + 1 < len(mat[i]) and bomb == 0):
+                    if(i - 1 >= 0 and j + 1 < len(mat[i]) and bomb == 0):
                         if(mat[i][j + 1][2] != 0):
                             fill(real_mat, [i, j + 1, mat[i][j + 1][2]], 0)
                             fill(mat, [i, j + 1, mat[i][j + 1][2]], 0)
@@ -90,7 +90,7 @@ def get_stats(mat, real_mat, prev_score):
                                 fill(mat, [i - 1, j + 1, mat[i - 1][j + 1][2]], 0)
                                 bomb = 1
                     elif(bomb == 0):
-                        if(i + 1 < len(mat) and j - 1 >= 0):
+                        if(i + 1 < len(mat) and j + 1 < len(mat[i])):
                             if(mat[i + 1][j + 1][2] != 0):
                                 fill(real_mat, [i + 1, j - 1, mat[i + 1][j - 1][2]], 0)
                                 fill(mat, [i + 1, j - 1, mat[i + 1][j - 1][2]], 0)
